@@ -5,13 +5,38 @@ export default createStore({
     productos: [],
     carrito: {},
   },
-  getters: {},
+  getters: {
+    totalCantidad(state) {
+      return Object.values(state.carrito).reduce(
+        (acc, { cantidad }) => acc + cantidad,
+        0
+      );
+    },
+    totalPrecio(state) {
+      return Object.values(state.carrito).reduce(
+        (acc, { cantidad, precio }) => acc + cantidad * precio,
+        0
+      );
+    },
+  },
   mutations: {
     setProducto(state, payload) {
       state.productos = payload;
     },
     setCarrito(state, payload) {
       state.carrito[payload.id] = payload;
+    },
+    vaciasCarrito(state) {
+      state.carrito = {};
+    },
+    aumentar(state, payload) {
+      state.carrito[payload].cantidad = state.carrito[payload].cantidad + 1;
+    },
+    disminuir(state, payload) {
+      state.carrito[payload].cantidad = state.carrito[payload].cantidad - 1;
+      if (state.carrito[payload].cantidad === 0) {
+        delete state.carrito[payload];
+      }
     },
   },
   actions: {

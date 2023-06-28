@@ -4,7 +4,8 @@
       <img
         :src="producto.thumbnailUrl"
         :alt="`imagen-${producto.title}`"
-        class="card-img-top"
+        class="card-img-top img-fluid"
+        style="height: 150px"
       />
       <div class="card-body">
         <h5 class="card-title">{{ producto.title }}</h5>
